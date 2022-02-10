@@ -1,25 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useRef } from 'react';
+import VideoJS from './VideoJS'; // point to where the functional component is stored
 
-function App() {
+const App = () => {
+  const playerRef = useRef(null);
+
+  const videoJsOptions = {
+    autoplay: true,
+    controls: true,
+    responsive: true,
+    fluid: true,
+    sources: [
+      {
+        src: 'https://d1fyajldp701ol.cloudfront.net/61ec0af05f53bc1805a694071644024199-620658.mp4#t=0.3',
+        type: 'video/mp4',
+      },
+    ],
+  };
+
+  const handlePlayerReady = (player) => {
+    playerRef.current = player;
+    player.on('waiting', () => {
+      console.log('player is waiting');
+    });
+
+    player.on('dispose', () => {
+      console.log('player will dispose');
+    });
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <div>Rest of app here</div>
+
+      <VideoJS options={videoJsOptions} onReady={handlePlayerReady} />
+
+      <div>Rest of app here</div>
+    </>
   );
-}
+};
 
 export default App;
