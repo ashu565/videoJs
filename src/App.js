@@ -21,7 +21,6 @@ const App = () => {
   const handlePlayerReady = (player) => {
     playerRef.current = player;
     player.on('waiting', () => {
-      console.log('player is waiting');
     });
 
     player.on('dispose', () => {
